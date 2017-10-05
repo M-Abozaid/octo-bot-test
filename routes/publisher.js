@@ -9,7 +9,7 @@ publisherRouter.use(bodyParser.json());
 
 publisherRouter.route('/')
 .get(function (req, res, next) {
-     Publisher.find(req.body)
+     Publisher.find()
         .populate('verticalId')
         .exec(function (err, publisher) {
         if (err) return next(err);
