@@ -9,9 +9,9 @@ regionRouter.use(bodyParser.json());
 
 regionRouter.route('/')
 .get(function (req, res, next) {
-     Region.find(req.body)
+     Region.find()
         .populate('verticalId')
-        .exec(function (err, region) {
+        .exec(function (err, regions) {
         if (err) return next(err);
         res.json(region);
     });
