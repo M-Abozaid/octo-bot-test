@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html ng-app="myApp" class="no-js css-menubar" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="author" content="">
+    <title>Chat</title>
+
+    <link rel="stylesheet" href="https://api.motion.ai/static/theme/assets/examples/css/apps/message.css">
+    <link href="https://api.motion.ai/sdk/webchat.css" rel="stylesheet" type="text/css">
+
+    <!-- UI Kit CSS -->
+    <link rel="stylesheet" href="css/uikit.min.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/uikit.min.js"></script>
+    <script src="js/uikit-icons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+    <link rel="stylesheet" href="css/custom.css" />
+</head>
+
+<body>
+
+    <div class="bg uk-section">
+        <!-- Chat section begins-->
+        <div class="uk-section chat-section">
+
+            <!-- container to wrap the main content of the chat-section -->
+            <div class="uk-container uk-container-large chat-container">
+
+
+                <div class="uk-child-width-expand@s chat-box-grid" uk-grid>
+                    <div class="uk-width-1-1 chat-box-heading">
+                        <p class="chat-box-heading-text">Chat</p>
+                    </div>
+                </div>
+
+                <!--  Chat heading divider begins -->
+                <div id="chat-box-divider" uk-grid>
+                    <div class="uk-width-1-1">
+                        <hr>
+                    </div>
+                </div>
+
+                <!-- Chat box text div begins-->
+                <div uk-grid>
+                    <!-- Chat div begins -->
+                    <div class="uk-width-1-1 chat" id="chat_div">
+
+                    </div>
+
+                </div>
+
+                <!-- Chat form div begins -->
+                <div uk-grid>
+
+                    <div class="uk-width-1-1">
+                        <form name="chat-form" action="">
+                            <!-- <form name="chat-form" action="/askapiai" method="post"> -->
+                            <div class="chat-input uk-grid-small" uk-grid>
+
+                                <div class="uk-width-5-6-@l uk-width-3-4@m uk-width-2-3@s  chat-input-field-div">
+                                    <input class="uk-input" id="chat_input" name="chat" type="text" placeholder="Ask anything!">
+                                </div>
+
+                                <div class="uk-width-1-6@l uk-width-1-4@m uk-width-1-3@s chat-button-div">
+                                    <!-- <button class="uk-button uk-button-primary"><span uk-icon="icon: check"></span></button> -->
+                                    <input type="submit" class="uk-button uk-button-primary chat-submit-button" value="Submit" id="submit_button">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Chat form div ends -->
+
+                </div>
+                <!-- Grid div ends -->
+            </div>
+            <!-- container to wrap the main content of the chat-section ends -->
+        </div>
+        <!-- Chat section ends -->
+</body>
+
+<script src="chat.js"></script>
+<script>
+    motionAI_Init('76368?color=2F5C6B&sendBtn=SEND&inputBox=Type%20something...&token=7f6dd77f2ef3b1c5ea69953206ae20ee', true, 400, 600, 'http://www.bryanwills.com/video/amplbot.png');
+   /* You may also invoke motionAI_Open() to manually open the modal. */
+
+</script>
+
+<script type="text/javascript">
+    console.log("Script is loaded");
+
+    $("#submit_button").on("click", function (event) {
+        event.preventDefault();
+        var chat_input = document.getElementById("chat_input");
+        var chat_input_text = chat_input.value;
+        chat_input.value = "";
+        chat_input.placeholder = "";
+        handelChat(chat_input_text)
+
+        askMotion(chat_input_text)
+
+       
+
+        console.log("Async Request sent to the server");
+
+
+    });
+    function handelChat(msg){
+        var div_element = document.createElement("DIV");
+        var textnode = document.createTextNode(msg);
+        div_element.appendChild(textnode);
+        div_element.setAttribute("class", "bubble you");
+
+        var chatbox = document.getElementsByClassName("chat");
+        chatbox[0].appendChild(div_element);
+
+
+        
+
+        var chatbox_height = document.getElementById('chat_div');
+
+        console.log(chatbox_height.scrollHeight);
+        $('#chat_div').animate({ scrollTop: chatbox_height.scrollHeight });
+    }
+    function askMotion(text) {
+            //Send the POST request
+            $.post("/motion/send", { text: text }, function (reply_received) {
+                reply_received = JSON.parse(reply_received)
+                console.log("This is the reply from the API", reply_received);
+
+
+                //Create the response chat bubble
+                var chatbox = document.getElementsByClassName("chat");
+                var div_element = document.createElement("DIV");
+
+                $(div_element).html("<h4>" + reply_received["botResponse"] + "</h4> \n");
+                div_element.setAttribute("class", "bubble me");
+
+                if (reply_received.quickReplies) {
+                    reply_received.quickReplies.forEach(function (reply) {
+                        var button = document.createElement("BUTTON");
+                        $(button).on("click", quickReplay)
+                        $(button).html(reply.title)
+                        div_element.appendChild(button);
+                    }, this);
+                }
+
+                chatbox[0].appendChild(div_element);
+                //Animate the bubble into position
+                var chatbox_height = document.getElementById('chat_div');
+                console.log(chatbox_height.scrollHeight);
+                $('#chat_div').animate({ scrollTop: chatbox_height.scrollHeight });
+
+
+            })
+        }
+
+
+        var quickReplay = function (event) {
+            handelChat($(event.target).html())
+            askMotion($(event.target).html())
+
+        }
+</script>
+
+</html>

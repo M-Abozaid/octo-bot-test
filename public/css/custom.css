@@ -1,0 +1,215 @@
+@charset "utf-8";
+
+/* ----------------------------------
+
+Name:custom.css
+Version:0.0.0
+
+----------------------------------
+
+Table of contents
+        
+    01.  Body
+    
+----------------------------------
+
+*/
+
+/* ===================================
+    Body 
+====================================== */    
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body, html{
+            height: 100%; 
+            min-width: 300px;
+        }
+
+/* ===================================
+    Background
+====================================== */    
+
+
+        
+    .bg{
+        /* The image used */
+        background-image: url("../img/rsz_ishan-seefromthesky-118581.jpg");
+
+        /* Full height */
+        height: 100%; 
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+    }
+
+/* ===================================
+    Chat Section
+====================================== */ 
+
+    .chat-section{
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+        height: 600px;
+        background-color: white;
+        border: 2px solid white;
+        border-radius: 8px;
+        padding-top: 15px;
+        position: relative;
+
+
+    }
+
+/* ===================================
+    Chat Container
+====================================== */ 
+
+    .chat-container{
+        padding-left: 15px;
+        padding-right: 15px;
+
+    }
+
+/* ===================================
+    Chat Box Grid
+====================================== */ 
+
+    .chat-box-grid{
+        /*margin-left: 0px;*/
+    }
+
+
+/* ===================================
+    Chat Box Heading
+====================================== */ 
+
+    .chat-box-heading{
+        background-color: #eceff1;
+        margin-left: 30px;
+        padding-left: 15px;
+        height: 40px;  
+        padding-top: 7px;
+        position: relative;
+        border-radius: 4px;     
+    }
+
+/* ===================================
+    Chat Box Divider
+====================================== */ 
+
+    #chat-box-divider{
+        margin-top: 15px;    
+    }
+
+
+/* ===================================
+    Chat Text
+====================================== */ 
+
+ .bubble.you{
+        float: left;
+        color:#fff;
+        background-color: #00b0ff;
+        align-self; flex-start;
+        font-size: 14px;
+        position: relative;
+        display: inline-block;
+        clear: both;
+        margin-bottom: 8px;
+        padding: 10px 15px;
+        vertical-align: top;
+        border-radius: 5px;
+    }
+
+    .bubble.me{
+        float: right;
+        color: #1a1a1a;
+        background-color: #eceff1;
+        align-self; flex-start;
+        font-size: 14px;
+        position: relative;
+        display: inline-block;
+        clear: both;
+        margin-bottom: 8px;
+        padding: 10px 15px;
+        vertical-align: top;
+        border-radius: 5px;
+    }
+
+    .bubble.test{
+        float: right;
+        align-self; flex-start;
+        font-size: 14px;
+        position: relative;
+        display: inline-block;
+        clear: both;
+        margin-bottom: 8px;
+        padding: 10px 15px;
+        vertical-align: top;
+        border-radius: 5px;
+    }
+
+
+/* ===================================
+    Chat Box
+====================================== */ 
+
+    .chat{
+        height: 380px;
+        overflow: auto; 
+    }
+
+/* ===================================
+    Chat Input Div containing Field and Button
+====================================== */ 
+
+    .chat-input{
+        position: absolute;
+        bottom: 5px;
+        left: 0px;
+        right: 0px;
+        width: 100%;
+        padding-bottom: 15px;
+        /*padding-left: 15px;
+        padding-right: 15px;*/
+        /*margin-left: auto;*/
+        margin-right: auto;
+    }
+
+
+/* ===================================
+    Chat Input Field
+====================================== */ 
+
+    .chat-input-field-div, .chat-button-div{
+        padding-left: 30px;
+    }
+
+/* ===================================
+    Chat Submit Button
+====================================== */ 
+
+    .chat-submit-button{
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 100%;
+    }
+
+/* ===================================
+    Media Queries
+====================================== */ 
+
+    @media only screen and (max-width: 600px) {
+    .chat-section {
+        width: 90%;
+        
+    }
+}
+
