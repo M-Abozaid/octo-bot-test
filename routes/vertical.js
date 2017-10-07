@@ -21,33 +21,37 @@ verticalRouter.route('/')
 
 
     .post(function (req, res, next) {
-
-        Region.find({ "regionName": req.body.regionName }).then(region => {
-            console.log(region)
-            if (!region || region.length === 0) {
-                return res.end("region doesn't exist")
-            }
-
-            vertical.create({ 
-                isActivated: req.body.isActivated, 
-                verticalName: req.body.verticalName,
-                regionId: region._id 
-            }).then( (err, vertical)=> {
-                if (err) return next(err);
-                console.log('vertical created!');
-
-                var id = vertical._id;
-                res.writeHead(200, {
-                    'Content-Type': 'text/plain'
+        try {
+            Region.find({ "regionName": req.body.regionName }).then(region => {
+                console.log(region)
+                if (!region || region.length === 0) {
+                    return res.end("region doesn't exist")
+                }
+    
+                vertical.create({ 
+                    isActivated: req.body.isActivated, 
+                    verticalName: req.body.verticalName,
+                    regionId: region._id 
+                }).then( (err, vertical)=> {
+                    if (err) return next(err);
+                    console.log('vertical created!');
+    
+                    var id = vertical._id;
+                    res.writeHead(200, {
+                        'Content-Type': 'text/plain'
+                    });
+    
+                    res.end('Added the vertical with id: ' + id);
                 });
+    
+            }).catch(err => {
+    
+                res.end('err ' + "region doesn't exist")
+            })
+        } catch (error) {
+            console.log('err ',error)
+        }
 
-                res.end('Added the vertical with id: ' + id);
-            });
-
-        }).catch(err => {
-
-            res.end('err ' + "region doesn't exist")
-        })
 
 
     })
